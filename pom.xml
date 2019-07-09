@@ -8,10 +8,19 @@
     <artifactId>spark-all</artifactId>
     <packaging>pom</packaging>
     <version>2.0.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <modules>
         <module>spark-all-scala</module>
         <module>spark-all-sparksql</module>
         <module>spark-all-sparkstreaming</module>
+        <module>spark-all-sparkrdd</module>
     </modules>
 
 
