@@ -2,12 +2,13 @@ package com.timebusker.rdd02
 
 import java.util.UUID
 
+import org.apache.log4j.{Level, Logger}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{Partitioner, SparkConf, SparkContext}
 
 import scala.collection.mutable
 
-/*
+/**
   * @DESC:MostPopularTeacherTopN:计算最受欢迎的老师TopN
   * @author:timebusker
   * @date:2019 /7/9
@@ -18,9 +19,16 @@ object MostPopularTeacherTopN {
 
   val resultPath = "D:\\result\\" + System.currentTimeMillis() + "\\";
 
+  val TOPN = 3
+
   def main(args: Array[String]): Unit = {
+    Logger.getLogger("org.apache.spark").setLevel(Level.OFF)
+    Logger.getLogger("org.apache.hadoop").setLevel(Level.OFF)
+    Logger.getLogger("org.spark_project").setLevel(Level.OFF)
+
     val conf = new SparkConf().setAppName("MostPopularTeacherTopN").setMaster("local[4]")
     val sc = new SparkContext(conf)
+    sc.setLogLevel("WARN")
 
     val lines = sc.textFile(inputPath, 1)
 
@@ -72,19 +80,17 @@ object MostPopularTeacherTopN {
       val arr: Array[String] = x.replaceAll("http://", "").replaceAll(".edu360.cn", "").split("/")
       (arr(0), arr(1))
     })
-
     val mapRDD = courseAndTeacherRDD.map((_, 1))
-    val reduceRDD = mapRDD.reduceByKey(_ + _)
 
     // 设置重分区
     // 计算有多少学科
-    val subjects = reduceRDD.map(_._1._1).distinct().collect()
+    val subjects = mapRDD.map(_._1._1).distinct().collect()
     val partitioner = new MinePartitioner(subjects)
-    val partitioned = reduceRDD.partitionBy(partitioner)
-    partitioned.saveAsTextFile(resultPath + "006")
+    val reduceRDD = mapRDD.reduceByKey(partitioner, _ + _)
+    reduceRDD.saveAsTextFile(resultPath + "006")
 
     // 针对分区内元素求出TopN
-    val sorted = partitioned.mapPartitions(iterator => {
+    val sorted = reduceRDD.mapPartitions(iterator => {
       // 将迭代器转换成list，然后排序，在转换成迭代器返回
       iterator.toList.sortBy(_._2).reverse.take(3).iterator
     })
@@ -94,6 +100,10 @@ object MostPopularTeacherTopN {
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
+
+    // 组合Key的分组topN不能只用简单的key聚合   groupByKey、CombineByKey
+    // 求取分组后的TopN，目前是使用加载到内存后再排序求取，如果数据量大时不可行
+
   }
 }
 

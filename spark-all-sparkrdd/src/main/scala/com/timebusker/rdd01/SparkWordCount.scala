@@ -4,7 +4,7 @@ import java.util.UUID
 
 import org.apache.spark.{SparkConf, SparkContext}
 
-/*
+/**
   * @DESC:SparkWordCount:Spark编写Word Count
   * @author:timebusker
   * @date:2019 /7/9
