@@ -59,14 +59,14 @@ object GroupTopN {
     })
     resRDD.saveAsTextFile(resultPath + "001")
 
-    val storeRDD = resRDD.map(x => {
-      (x._2.foreach(student => {
+    val storeRDD = resRDD.flatMap(x => {
+      println("---------->>>>\t" + x._2)
+      for (student <- x._2) {
         val subject = student.split(" ")(0)
         val name = student.split(" ")(1)
         val score = student.split(" ")(2)
-        println(subject, name, score)
-        (subject, name, score)
-      }))
+        yield (subject, name, score)
+      }
     })
     storeRDD.saveAsTextFile(resultPath + "002")
   }

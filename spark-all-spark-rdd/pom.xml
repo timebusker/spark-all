@@ -5,12 +5,12 @@
     <parent>
         <artifactId>spark-all</artifactId>
         <groupId>com.timebusker</groupId>
-        <version>2.0.0</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spark-all-sparkrdd</artifactId>
-
+    <artifactId>spark-all-spark-rdd</artifactId>
+	
     <properties>
         <spark.version>2.4.3</spark.version>
     </properties>
@@ -23,4 +23,5 @@
             <version>${spark.version}</version>
         </dependency>
     </dependencies>
+	
 </project>
