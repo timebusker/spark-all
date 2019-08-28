@@ -1,4 +1,4 @@
-package com.timebusker.scala
+package com.timebusker.scala.starter
 
 /*
   * @DESC:Scala_08_Object：对象操作

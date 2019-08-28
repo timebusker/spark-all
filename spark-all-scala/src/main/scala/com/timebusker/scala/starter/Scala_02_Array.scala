@@ -1,4 +1,4 @@
-package com.timebusker.scala
+package com.timebusker.scala.starter
 
 /*
   * @DESC:Scala_02_Array：数组操作

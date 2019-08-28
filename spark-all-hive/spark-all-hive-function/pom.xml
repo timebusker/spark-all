@@ -11,5 +11,17 @@
 
     <artifactId>spark-all-hive-function</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-exec</artifactId>
+            <version>${hive.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>8.10.17</version>
+        </dependency>
+    </dependencies>
 </project>

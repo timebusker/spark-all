@@ -1,4 +1,4 @@
-package com.timebusker.scala
+package com.timebusker.scala.starter
 
 /*
   * @DESC:Scala_07_ForLoop：循环的操作扩展

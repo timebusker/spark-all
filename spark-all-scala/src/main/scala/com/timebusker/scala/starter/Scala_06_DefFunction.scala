@@ -1,4 +1,4 @@
-package com.timebusker.scala
+package com.timebusker.scala.starter
 
 import java.io.{File, PrintWriter}
 
