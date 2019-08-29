@@ -15,6 +15,7 @@
         <module>spark-all-spark-rdd</module>
         <module>spark-all-spark-streaming</module>
         <module>spark-all-hdfs-common</module>
+        <module>spark-all-crawler</module>
     </modules>
 
     <properties>
