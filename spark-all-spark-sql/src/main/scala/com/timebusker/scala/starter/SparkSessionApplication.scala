@@ -19,7 +19,7 @@ object SparkSessionApplication {
 
     val path = "D:\\WorkSpaces\\ideaProjectes\\spark-all\\spark-all-spark-sql\\src\\main\\resources"
 
-    val spark = new sql.SparkSession.Builder().appName("SparkSessionApplication").master("local[2]").getOrCreate()
+    val spark = new SparkSession.Builder().appName("SparkSessionApplication").master("local[2]").getOrCreate()
 
     val people = spark.read.json(path)
     people.printSchema()

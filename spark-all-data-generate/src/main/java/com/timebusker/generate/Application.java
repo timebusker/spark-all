@@ -1,21 +1,20 @@
-package com.timebusker.crawler;
+package com.timebusker.generate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @DESC:Application
  * @author:timebusker
- * @date:2019/8/29
+ * @date:2019/8/30
  */
+
 @SpringBootApplication
 @EnableScheduling
-@EnableAsync
 public class Application {
 
     public static void main(String[] args) {
-       SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

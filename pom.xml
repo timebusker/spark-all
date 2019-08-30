@@ -16,6 +16,7 @@
         <module>spark-all-spark-streaming</module>
         <module>spark-all-hdfs-common</module>
         <module>spark-all-crawler</module>
+        <module>spark-all-data-generate</module>
     </modules>
 
     <properties>
@@ -26,8 +27,9 @@
         <hive.version>1.2.1</hive.version>
         <hive2.version>2.3.4</hive2.version>
         <hadoop.version>2.8.5</hadoop.version>
-        <spark.scala.version>2.11</spark.scala.version>
-        <scala.version>${spark.scala.version}.12</scala.version>
+        <hbase.version>2.1.5</hbase.version>
+        <project.scala.version>2.11</project.scala.version>
+        <scala.version>${project.scala.version}.12</scala.version>
         <spark.version>2.4.3</spark.version>
     </properties>
 
@@ -45,5 +47,19 @@
 
     <build>
         <finalName>${artifactId}-${version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <meminitial>128m</meminitial>
+                    <maxmem>512m</maxmem>
+                    <fork>true</fork>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
