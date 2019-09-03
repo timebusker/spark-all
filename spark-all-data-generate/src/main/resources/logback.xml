@@ -3,7 +3,7 @@
     <!-- 文件输出格式 -->
     <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n"/>
     <!-- 文件路径 -->
-    <property name="FILE" value="logs/crawler.log"/>
+    <property name="FILE" value="logs/generate.log"/>
 
     <!-- 开发环境 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
