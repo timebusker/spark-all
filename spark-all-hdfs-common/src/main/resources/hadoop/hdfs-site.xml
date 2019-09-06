@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+<!--指定hdfs的nameservice为ns1，需要和core-site.xml中的保持一致 -->
+<property>
+    <name>dfs.nameservices</name>
+    <value>HdpCluster</value>
+</property>
+<!--name node存储数据目录 -->
+<property>
+  <name>dfs.namenode.name.dir</name>
+  <value>/BDS1/hadoop/hdfs/namenode,/BDS2/hadoop/hdfs/namenode,/BDS3/hadoop/hdfs/namenode</value>
+  <final>true</final>
+</property>
+<!--data node存储数据目录 -->
+<property>
+  <name>dfs.datanode.data.dir</name>
+  <value>/BDS1/hadoop/hdfs/datanode,/BDS2/hadoop/hdfs/datanode,/BDS3/hadoop/hdfs/datanode</value>
+  <final>true</final>
+</property>
+
+<!-- HdpCluster下面有两个NameNode，分别是nn1，nn2 -->
+<property>
+    <name>dfs.ha.namenodes.HdpCluster</name>
+    <value>nn1,nn2</value>
+</property>
+<!-- nn1的RPC通信地址 -->
+<property>
+    <name>dfs.namenode.rpc-address.HdpCluster.nn1</name>
+    <value>hdp-cluster-13:9000</value>
+</property>
+<!-- nn1的http通信地址 -->
+<property>
+    <name>dfs.namenode.http-address.HdpCluster.nn1</name>
+    <value>hdp-cluster-13:50070</value>
+</property>
+<!-- nn2的RPC通信地址 -->
+<property>
+    <name>dfs.namenode.rpc-address.HdpCluster.nn2</name>
+    <value>hdp-cluster-14:9000</value>
+</property>
+<!-- nn2的http通信地址 -->
+<property>
+    <name>dfs.namenode.http-address.HdpCluster.nn2</name>
+    <value>hdp-cluster-14:50070</value>
+</property>
+<!-- 指定NameNode的元数据在JournalNode上的存放位置 -->
+<property>
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://hdp-cluster-17:8485;hdp-cluster-18:8485;hdp-cluster-19:8485/data</value>
+</property>
+<!-- 指定JournalNode在本地磁盘存放数据的位置 -->
+<property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/BDS4/journal/data</value>
+</property>
+<!-- 开启NameNode失败自动切换 -->
+<property>
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
+</property>
+<!-- 配置失败自动切换实现方式 -->
+<property>
+    <name>dfs.client.failover.proxy.provider.HdpCluster</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+</property>
+<!-- 配置隔离机制方法，多个机制用换行分割，即每个机制暂用一行-->
+<property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>
+        sshfence
+        shell(/bin/true)
+    </value>
+</property>
+<!-- 使用sshfence隔离机制时需要ssh免登陆 -->
+<property>
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>/root/.ssh/id_rsa</value>
+</property>
+<!-- 配置sshfence隔离机制超时时间 -->
+<property>
+    <name>dfs.ha.fencing.ssh.connect-timeout</name>
+    <value>30000</value>
+</property>
+<!--关闭权限认证 -->
+<property>
+  <name>dfs.permissions.enabled</name>
+  <value>false</value>
+  <description>
+    If "true", enable permission checking in HDFS.
+    If "false", permission checking is turned off,
+    but all other behavior is unchanged.
+    Switching from one parameter value to the other does not change the mode,
+    owner or group of files or directories.
+  </description>
+</property>
+<!--超级用户组 node存储数据目录 -->
+<property>
+  <name>dfs.permissions.superusergroup</name>
+  <value>root</value>
+</property>
+<!--副本数 -->
+<property>
+  <name>dfs.replication</name>
+  <value>3</value>
+</property>
+<!--最大副本数 -->
+<property>
+  <name>dfs.replication.max</name>
+  <value>10</value>
+</property>
+<!--支持文件内容追加 -->
+<property>
+  <name>dfs.support.append</name>
+  <value>true</value>
+  <final>true</final>
+</property>
+<!--web服务端访问开启 -->
+<property>
+  <name>dfs.webhdfs.enabled</name>
+  <value>true</value>
+  <final>true</final>
+</property>	
+<!--data node 默认文件目录权限 -->
+<property>
+  <name>dfs.datanode.data.dir.perm</name>
+  <value>750</value>
+</property>	
+<!--容忍坏盘个数（N-1） -->
+<property>
+  <name>dfs.datanode.failed.volumes.tolerated</name>
+  <value>2</value>
+  <final>true</final>
+</property>	
+</configuration>

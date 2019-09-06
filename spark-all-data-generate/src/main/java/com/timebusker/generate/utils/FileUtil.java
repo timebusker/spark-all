@@ -1,5 +1,6 @@
 package com.timebusker.generate.utils;
 
+import com.google.common.base.Preconditions;
 import com.sun.org.apache.bcel.internal.generic.FSUB;
 
 import java.io.*;
@@ -8,6 +9,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileUtil {
+
+    public static final String ENCODE_GBK = "GBK";
+
+    public static final String ENCODE_UTF8 = "UTF-8";
 
     public static final String RENAME_FILE_SUFFIX = "_done";
 
@@ -41,7 +46,12 @@ public class FileUtil {
     private static String data;
 
     public static String readLineFile(File file, long index) throws Exception {
-        bufferedReader = new BufferedReader(new FileReader(file));
+        return readLineFile(file, index, ENCODE_UTF8);
+    }
+
+    public static String readLineFile(File file, long index, String encode) throws Exception {
+        InputStreamReader in = new InputStreamReader(new FileInputStream(file), encode);
+        bufferedReader = new BufferedReader(in);
         long count = 0;
         do {
             data = bufferedReader.readLine();
@@ -55,6 +65,9 @@ public class FileUtil {
     }
 
     public static void writeFile(File file, String data) throws Exception {
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
         bufferedWriter = new BufferedWriter(new FileWriter(file, true));
         bufferedWriter.write(data);
         bufferedWriter.write("\n");
@@ -71,5 +84,14 @@ public class FileUtil {
         } else {
             return false;
         }
+    }
+
+    public static boolean createPath(String path) {
+        Preconditions.checkNotNull(path);
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return true;
     }
 }

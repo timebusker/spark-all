@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration> 
+  <!-- 指定mr框架为yarn方式（local/yarn） -->
+  <property> 
+    <name>mapreduce.framework.name</name>  
+    <value>yarn</value> 
+  </property>  
+  <!-- 关闭推测执行 网上反馈有问题，待验证-->  
+  <property> 
+    <name>mapreduce.map.speculative</name>  
+    <value>false</value> 
+  </property>  
+  <property> 
+    <name>mapreduce.reduce.speculative</name>  
+    <value>false</value> 
+  </property>  
+  <property> 
+    <name>mapreduce.cluster.temp.dir</name>  
+    <value>/BDS4/mapred/temp</value> 
+  </property>  
+  <!-- application应用提交时上传文件的副本数，可以加快map启动-->  
+  <property> 
+    <name>mapreduce.client.submit.file.replication</name>  
+    <value>5</value> 
+  </property>  
+  <!-- 最多能申请的counter数量 -->  
+  <property> 
+    <name>mapreduce.job.counters.max</name>  
+    <value>300</value> 
+  </property>  
+  <!-- 当只有一个reduce任务的计算时，启用uber模式，直接在AppMaster进行运算 -->  
+  <property> 
+    <name>mapreduce.job.ubertask.enable</name>  
+    <value>false</value> 
+  </property>  
+  <property> 
+    <name>mapreduce.job.ubertask.maxreduces</name>  
+    <value>1</value> 
+  </property>  
+  <property> 
+    <name>mapreduce.job.ubertask.maxbytes</name>  
+    <value/> 
+  </property>  
+  <property> 
+    <name>mapreduce.job.ubertask.maxmaps</name>  
+    <value>2</value> 
+  </property>  
+  <property> 
+    <!-- 当启用了强制本地执行策略，该配置将告知是否遵循严格的数据本地化。如果启用，重用容器只能被分配至本节点上的任务。 -->  
+    <name>mapreduce.container.reuse.enforce.strict-locality</name>  
+    <value>false</value> 
+  </property>  
+  <property> 
+    <name>mapreduce.job.maxtaskfailures.per.tracker</name>  
+    <value>3</value> 
+  </property>  
+  <!-- reduce进行shuffle的时候，用于启动合并输出和磁盘溢写的过程的阀值，默认为0.66。如果允许，适当增大其比例能够减少磁盘溢写次数，提高系统性能。同mapreduce.reduce.shuffle.input.buffer.percent一起使用。 -->  
+  <property> 
+    <name>mapreduce.reduce.shuffle.merge.percent</name>  
+    <value>0.8</value> 
+  </property>  
+  <property> 
+    <name>yarn.app.mapreduce.am.staging-dir</name>  
+    <value>/BDS4/yarn/staging</value> 
+  </property>    
+  <property> 
+    <name>mapreduce.jobhistory.intermediate-done-dir</name>  
+    <value>/BDS4/mr-history/tmp</value> 
+  </property> 
+  <property> 
+    <name>mapreduce.jobhistory.done-dir</name>  
+    <value>/BDS4/mr-history/done</value> 
+  </property> 
+  
+  <!-- YarnChild 启动JVM参数设置-->  
+  <property> 
+    <name>mapred.child.java.opts</name>  
+    <value>-Xms1024M -Xmx2048M -Xloggc:/tmp/@taskid@.gc</value> 
+  </property>  
+  
+  <property>
+    <name>mapreduce.map.memory.mb</name>  
+    <value>1536</value> 
+  </property> 
+  <property> 
+    <name>mapreduce.map.java.opts</name>  
+    <value>-Xmx1024M -Djava.net.preferIPv4Stack=true</value> 
+  </property> 
+  <property> 
+    <name>mapreduce.admin.map.child.java.opts</name>  
+    <value>-Dzookeeper.request.timeout=120000 -server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true</value> 
+  </property>
+  
+  <property> 
+    <name>mapreduce.reduce.memory.mb</name>  
+    <value>1536</value> 
+  </property> 
+  <property> 
+    <name>mapreduce.reduce.java.opts</name>  
+    <value>-Xmx1024M -Djava.net.preferIPv4Stack=true</value> 
+  </property>   
+  <property> 
+    <name>mapreduce.admin.reduce.child.java.opts</name>  
+    <value>-Dzookeeper.request.timeout=120000 -server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true</value> 
+  </property> 
+  
+  <property> 
+    <name>yarn.app.mapreduce.am.resource.mb</name>  
+    <value>1536</value> 
+  </property> 
+  <property> 
+    <name>yarn.app.mapreduce.am.command-opts</name>  
+    <value>-Xmx1024m -XX:CMSFullGCsBeforeCompaction=1 -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -verbose:gc</value> 
+  </property>   
+  <!-- 配置历史服务-->
+  <property>
+    <name>mapreduce.jobhistory.address</name>
+    <value>hdp-cluster-14:10020</value>
+    <description>MapReduce JobHistory Server IPC host:port</description>
+  </property>
+  
+  <property>
+    <name>mapreduce.jobhistory.webapp.address</name>
+    <value>hdp-cluster-14:19888</value>
+    <description>MapReduce JobHistory Server Web UI host:port</description>
+  </property>  
+</configuration>

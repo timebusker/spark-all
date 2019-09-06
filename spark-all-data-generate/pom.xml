@@ -27,6 +27,11 @@
             <artifactId>zkclient</artifactId>
             <version>0.11</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -38,6 +43,14 @@
                     <fork>true</fork>
                     <mainClass>com.timebusker.generate.Application</mainClass>
                 </configuration>
+                <!-- 解决spring boot 没有主清单属性问题-->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

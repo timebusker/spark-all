@@ -1,41 +1,39 @@
 package com.timebusker.generate.task;
 
 import com.timebusker.generate.utils.FileUtil;
+import com.timebusker.generate.vo.WorkDataVo;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class MoocCrawlerLogTask extends AbstractBaseTask {
 
+    private static AtomicLong count = new AtomicLong(1l);
+
     @PostConstruct
     public void init() throws Exception {
-        vo = zookeeperUtils.getVo();
+        vo = new WorkDataVo(zookeeperUtils.getServer(), zookeeperUtils.getROOT());
         vo.setZkWorkPath(config.getImoocClassZK());
+        vo.setEncode(FileUtil.ENCODE_UTF8);
         // 创建工作目录
         zookeeperUtils.createWorkNode(vo);
+        // 设置文件后缀
+        vo.setSourcePath(config.getImoocClass());
     }
 
-    @Scheduled(fixedRate = 10)
+    @Scheduled(fixedRate = 1000)
     public void execute() throws Exception {
-        // 更新日志文件目录信息
-        updateFilesState(vo);
-        zookeeperUtils.sampleChildrenNode(vo);
-
-        // 执行读取日志文件
-        String data = FileUtil.readLineFile(new File(vo.getFilePath()), vo.getLastIndex());
-        if (data == null) {
-            logger.info(vo.getFilePath() + "文件已经被全部读取处理！");
-            zookeeperUtils.deleteNode(vo);
-            FileUtil.renameFile(new File(vo.getFilePath()));
-            return;
-        }
-        // 再次更新日志文件
-        vo.setZkNodeData(vo.getFilePath() + vo.SEPARATOR + (vo.getLastIndex() + 1l));
-        zookeeperUtils.setNodeData(vo);
-        System.err.println(data);
-        FileUtil.writeFile(new File(vo.getFilePath() + "_write"), data);
+        logger.info("当前工作上下文信息是：" + vo.toString());
+        // 读取文件内容
+        String data = readLineFile(vo);
+        // 处理文件内容
+        Thread.sleep(random.nextInt(SLEEP_TIME));
+        long order = (count.get() / MAX_LINE_SIZE);
+        FileUtil.writeFile(new File(PATH + config.getImoocClassZK().toLowerCase() + FILE_NAME + order), data);
+        count.incrementAndGet();
     }
 }

@@ -14,8 +14,6 @@ public class ZookeeperUtils {
 
     private ZkClient zkClient;
 
-    private WorkDataVo vo;
-
     private String server;
 
     private String ROOT;
@@ -25,7 +23,6 @@ public class ZookeeperUtils {
     public ZookeeperUtils(String servers, String rootPath) {
         server = servers;
         ROOT = rootPath;
-        vo = new WorkDataVo(server, ROOT);
         if (zkClient == null) {
             zkClient = new ZkClient(server);
         }
@@ -80,19 +77,11 @@ public class ZookeeperUtils {
         zkClient.delete(vo.getZkNodePath());
     }
 
-    public WorkDataVo getVo() {
-        return vo;
-    }
-
-    public void setVo(WorkDataVo vo) {
-        this.vo = vo;
+    public String getROOT() {
+        return ROOT;
     }
 
     public String getServer() {
         return server;
-    }
-
-    public String getROOT() {
-        return ROOT;
     }
 }

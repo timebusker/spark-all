@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<configuration>
+    <!-- 开启RM高可用 -->
+    <property>
+       <name>yarn.resourcemanager.ha.enabled</name>
+       <value>true</value>
+    </property>
+    <!-- 指定RM的cluster id -->
+    <property>
+       <name>yarn.resourcemanager.cluster-id</name>
+       <value>hdpcompute</value>
+    </property>
+    <!-- 指定RM的名字 -->
+    <property>
+       <name>yarn.resourcemanager.ha.rm-ids</name>
+       <value>rm1,rm2</value>
+    </property>
+    <!-- 分别指定RM的地址 -->
+    <property>
+       <name>yarn.resourcemanager.hostname.rm1</name>
+       <value>hdp-cluster-13</value>
+    </property>
+    <property>
+       <name>yarn.resourcemanager.hostname.rm2</name>
+       <value>hdp-cluster-14</value>
+    </property>
+    <!-- 指定zk集群地址 -->
+    <property>
+       <name>yarn.resourcemanager.zk-address</name>
+       <value>hdp-cluster-11:2181,hdp-cluster-12:2181,hdp-cluster-13:2181</value>
+    </property>
+    <property>
+       <name>yarn.nodemanager.aux-services</name>
+       <value>mapreduce_shuffle,spark_shuffle</value>
+    </property>
+	<property>
+       <name>spark.shuffle.service.port</name>
+       <value>7337</value>
+    </property>
+    <property>
+       <name>yarn.nodemanager.aux-services.spark_shuffle.class</name>
+       <value>org.apache.spark.network.yarn.YarnShuffleService</value>
+    </property>
+	<property>
+    <description>
+	当设置yarn.nodemanager.resource.detect-hardware-capabilities为true时，系统会自动计算，否则默认值为8192MB.
+    </description>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>4096</value>
+  </property>
+  <property>
+    <description>虚拟内核数设置，默认值8</description>
+    <name>yarn.nodemanager.resource.cpu-vcores</name>
+    <value>4</value>
+  </property>
+  <property>
+    <description>Ratio between virtual memory to physical memory when
+    setting memory limits for containers. Container allocations are
+    expressed in terms of physical memory, and virtual memory usage
+    is allowed to exceed this allocation by this ratio.
+    </description>
+    <name>yarn.nodemanager.vmem-pmem-ratio</name>
+    <value>6</value>
+  </property>
+</configuration>

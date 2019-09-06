@@ -10,7 +10,10 @@ public class WorkDataVo {
     private String zkNodePath;
     private Object zkNodeData;
     private String filePath;
+    private String fileName;
     private long lastIndex;
+    private String sourcePath;
+    private String encode;
     public static final String SEPARATOR = "@@@";
 
     public WorkDataVo(String server, String zkRoot) {
@@ -65,5 +68,41 @@ public class WorkDataVo {
 
     public String getServer() {
         return server;
+    }
+
+    public String getFileName() {
+        return new File(this.filePath).getName();
+    }
+
+    public String getSourcePath() {
+        return sourcePath;
+    }
+
+    public void setSourcePath(String sourcePath) {
+        this.sourcePath = sourcePath;
+    }
+
+    public String getEncode() {
+        return encode;
+    }
+
+    public void setEncode(String encode) {
+        this.encode = encode;
+    }
+
+    @Override
+    public String toString() {
+        return "WorkDataVo{" +
+                "server='" + server + '\'' +
+                ", zkRoot='" + zkRoot + '\'' +
+                ", zkWorkPath='" + zkWorkPath + '\'' +
+                ", zkNodePath='" + zkNodePath + '\'' +
+                ", zkNodeData=" + zkNodeData +
+                ", filePath='" + filePath + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", lastIndex=" + lastIndex +
+                ", sourcePath='" + sourcePath + '\'' +
+                ", encode='" + encode + '\'' +
+                '}';
     }
 }

@@ -9,6 +9,8 @@ public class RandomTest {
         for (int i = 0; i < 10; i++) {
             int rand = random.nextInt(2);
             System.out.println(rand);
+
+            System.err.println(random.nextInt());
         }
     }
 }
