@@ -17,7 +17,7 @@ public class KafkaTestTask {
     @Autowired
     private PushMessageService service;
 
-    @Scheduled(fixedRate = 10)
+    @Scheduled(fixedRate = 10000)
     public void execute() {
         service.sendMessage("timebusker", new MessageEntity("这是测试消息啊!").toString());
     }
