@@ -17,6 +17,7 @@
         <module>spark-all-hdfs-common</module>
         <module>spark-all-crawler</module>
         <module>spark-all-data-generate</module>
+        <module>spark-all-kafka</module>
     </modules>
 
     <properties>

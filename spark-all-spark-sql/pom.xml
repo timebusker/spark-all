@@ -34,14 +34,14 @@
         <dependency>
             <groupId>com.ggstar</groupId>
             <artifactId>ipdatabase</artifactId>
-            <version>1.0.0-RELEASES</version>
+            <version>1.0.0-RELEASE</version>
         </dependency>
         <!--IP信息解析依赖-->
     </dependencies>
 
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>
-        <!--        <testSourceDirectory>src/test/scala</testSourceDirectory>-->
+        <!-- <testSourceDirectory>src/test/scala</testSourceDirectory>-->
         <plugins>
             <plugin>
                 <groupId>org.scala-tools</groupId>
