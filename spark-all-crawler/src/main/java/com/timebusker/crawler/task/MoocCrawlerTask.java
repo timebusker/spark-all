@@ -17,7 +17,7 @@ import java.io.IOException;
  * @author:timebusker
  * @date:2019/8/30
  */
-//@Component
+@Component
 public class MoocCrawlerTask {
 
     private static final Logger logger = LoggerFactory.getLogger(MoocCrawlerTask.class);
@@ -25,7 +25,7 @@ public class MoocCrawlerTask {
     @Autowired
     private ZookeeperConfig zookeeper;
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 10000)
     public void execute() {
         int i = 0;
         do {

@@ -14,7 +14,7 @@ import java.net.Socket;
  * @author:timebusker
  * @date:2019/8/30
  */
-@Component
+// @Component
 public class SocketWriteDataTask {
 
     @Scheduled(fixedRate = 1000)

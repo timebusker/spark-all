@@ -13,7 +13,7 @@ import java.net.Socket;
  * @date:2019/8/30
  */
 
-@Component
+// @Component
 public class SocketServer {
 
     public static final String IP_ADDRESS = "127.0.0.1";
