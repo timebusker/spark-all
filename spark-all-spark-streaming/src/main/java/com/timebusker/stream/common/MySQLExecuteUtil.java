@@ -4,6 +4,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 /**
  * @DESC:MysqlDataSource
@@ -12,36 +14,41 @@ import javax.sql.DataSource;
  */
 public class MySQLExecuteUtil {
 
-    private static HikariDataSource dataSource;
+    private static volatile HikariDataSource dataSource;
 
-    public static HikariDataSource getDataSource() {
-        HikariConfig config = new HikariConfig();
-        config = new HikariConfig();
-        config.setDriverClassName("com.mysql.jdbc.Driver");
-        config.setJdbcUrl("jdbc:mysql://localhost:3306?useSSL=false");
-        config.setUsername("root");
-        config.setPassword("timebusker");
-        dataSource = InitDataSource.instance(config);
-        return dataSource;
+    private static final HikariConfig config = new HikariConfig();
+
+    private static final String SQL = "INSERT INTO TB_SPARK_STREAM_COUNT (WORD,CNT) VALUE (?,?)";
+
+    public static Connection getConnection() throws Exception {
+        return getDataSource().getConnection();
     }
 
-    private static class InitDataSource {
+    public static void execute(String word, int cnt) throws Exception {
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(SQL);
+        statement.setString(1, word);
+        statement.setInt(2, cnt);
+        statement.executeUpdate();
+    }
 
-        private static HikariDataSource dataSource;
-
-        public static HikariDataSource instance(HikariConfig config) {
-            if (dataSource == null || dataSource.isClosed()) {
+    public static HikariDataSource getDataSource() {
+        if (dataSource == null || dataSource.isClosed()) {
+            synchronized (MySQLExecuteUtil.class) {
+                config.setDriverClassName("com.mysql.jdbc.Driver");
+                config.setJdbcUrl("jdbc:mysql://localhost:3306/kettle-test?useSSL=false");
+                config.setUsername("root");
+                config.setPassword("timebusker");
                 config.setAutoCommit(true);
-                config.setConnectionTimeout(30000);
-                config.setIdleTimeout(3000);
+                config.setConnectionTimeout(120000);
+                config.setIdleTimeout(60000);
                 config.setMinimumIdle(1);
                 config.setMaximumPoolSize(30);
-                config.setMaxLifetime(30000);
-                config.setInitializationFailTimeout(3000);
-                config.setPoolName("test___" + Math.random());
+                config.setMaxLifetime(120000);
+                config.setInitializationFailTimeout(12000);
                 dataSource = new HikariDataSource(config);
             }
-            return dataSource;
         }
+        return dataSource;
     }
 }

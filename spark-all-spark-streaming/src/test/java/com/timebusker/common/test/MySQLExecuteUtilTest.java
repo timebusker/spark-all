@@ -25,7 +25,7 @@ public class MySQLExecuteUtilTest {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    HikariDataSource dataSource = MySQLExecuteUtil.getDataSource();
+                    HikariDataSource dataSource = new MySQLExecuteUtil().getDataSource();
                     set.add(dataSource.getPoolName());
                     latch.countDown();
                 }
