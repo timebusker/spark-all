@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:postgresql://12.12.12.6:5432/hive2</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>org.postgresql.Driver</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>postgres</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>timebusker</value>
+    </property>
+    <!-- 指定hive查询日志本地存放目录  -->
+    <property>
+        <name>hive.querylog.location</name>
+        <value>/tmp/hdpcentos/hive2/querylog</value>
+    </property>
+    <!-- 指定Hive的DDL/DML作业计算结果本地存储目录 -->
+    <property>
+        <name>hive.exec.local.scratchdir</name>
+        <value>/tmp/hdpcentos/hive2/scratchdir</value>
+    </property>
+    <!-- 用于向远程文件系统添加资源的本地临时目录  -->
+    <property>
+        <name>hive.downloaded.resources.dir</name>
+        <value>/tmp/hdpcentos/hive2/downloaded</value>
+    </property>
+    <!-- 指定HDFS内hive数据存放目录,HDFS自动创建 -->
+    <!-- 默认：/user/hive/warehouse -->
+    <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/user/hive2/warehouse</value>
+    </property>
+    <property>
+        <name>spark.sql.warehouse.dir</name>
+        <value>/user/hive2/warehouse</value>
+    </property>
+    <!-- 指定任务队列，默认default -->
+    <property>
+        <name>mapreduce.job.queuename</name>
+        <value>default</value>
+    </property>
+    <!-- 关闭源数据库版本校验机制 -->
+    <property>
+        <name>hive.metastore.schema.verification</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>hive.default.fileformat</name>
+        <value>orc</value>
+        <description>
+            Expects one of [textfile, sequencefile, rcfile, orc, parquet].
+            Default file format for CREATE TABLE statement. Users can explicitly override it by CREATE TABLE ... STORED
+            AS [FORMAT]
+        </description>
+    </property>
+</configuration>

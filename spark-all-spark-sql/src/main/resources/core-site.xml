@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <!--【这里的值指的是默认的HDFS路径。这里只有一个HDFS集群，在这里指定！该值来自于hdfs-site.xml中的配置】-->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://hdpcentos:9000</value>
+    </property>
+    <!--【这里的路径默认是NameNode、DataNode、JournalNode等存放数据的公共目录。用户也可以自己单独指定这三类节点的目录。这里的yarn_data/tmp目录与文件都是自己创建的】  -->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/tmp/hdpcentos/yarn/yarn_data/tmp</value>
+    </property>
+
+    <!-- 用户授权代理ProxyUser -->
+    <property>
+        <name>hadoop.proxyuser.root.hosts</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.root.groups</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.root.users</name>
+        <value>*</value>
+    </property>
+</configuration>

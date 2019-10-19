@@ -19,7 +19,14 @@
         <dependency>
             <groupId>org.apache.spark</groupId>
             <!-- scala版本与spark版本要匹配-->
-            <artifactId>spark-core_2.12</artifactId>
+            <artifactId>spark-core_${project.scala.version}</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <!--spark sql-->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_${project.scala.version}</artifactId>
             <version>${spark.version}</version>
         </dependency>
     </dependencies>

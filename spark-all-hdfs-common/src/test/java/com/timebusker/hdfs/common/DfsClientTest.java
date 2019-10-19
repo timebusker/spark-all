@@ -26,6 +26,11 @@ public class DfsClientTest {
 
     @Test
     public void test2() {
-        client.copyToLocalFile("/BDS4/yarn/staging/root/.staging/job_1561413675073_0017/job.jar","/tmp/");
+        client.copyFromLocalFile("D:\\WorkSpaces\\ideaProjectes\\spark-all\\spark-all-spark-rdd\\src\\\\main\\resources\\03", "/hdfs-test");
+    }
+
+    @Test
+    public void test3() {
+        client.mkdir("/output");
     }
 }
