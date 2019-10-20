@@ -1,14 +1,11 @@
 package com.timebusker.generate.conf;
 
-import com.timebusker.generate.utils.ZookeeperUtils;
-import org.I0Itec.zkclient.ZkClient;
+import com.timebusker.generate.utils.ZookeeperUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
 
 /**
  * @DESC:ZookeeperConfig
@@ -27,9 +24,9 @@ public class ZookeeperConfig {
     private String ROOT = "/SPARK-ALL-GENERATE";
 
     @Bean
-    public ZookeeperUtils zookeeperUtils() {
-        ZookeeperUtils zookeeperUtils = new ZookeeperUtils(servers, ROOT);
+    public ZookeeperUtil zookeeperUtils() {
+        ZookeeperUtil zookeeperUtil = new ZookeeperUtil(servers, ROOT);
         logger.info("完成初始化zkClient客户端工具类！");
-        return zookeeperUtils;
+        return zookeeperUtil;
     }
 }

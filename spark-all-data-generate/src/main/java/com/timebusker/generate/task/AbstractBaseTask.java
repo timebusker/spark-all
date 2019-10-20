@@ -2,7 +2,7 @@ package com.timebusker.generate.task;
 
 import com.timebusker.generate.conf.TaskWorkPathConfig;
 import com.timebusker.generate.utils.FileUtil;
-import com.timebusker.generate.utils.ZookeeperUtils;
+import com.timebusker.generate.utils.ZookeeperUtil;
 import com.timebusker.generate.vo.WorkDataVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public abstract class AbstractBaseTask {
     protected static final long MAX_LINE_SIZE = 10;
 
     @Autowired
-    protected ZookeeperUtils zookeeperUtils;
+    protected ZookeeperUtil zookeeperUtil;
 
     protected static final String FILE_NAME = "/generate_log_";
 
@@ -43,24 +43,24 @@ public abstract class AbstractBaseTask {
         for (File file : list) {
             vo.setZkNodePath(file.getName());
             vo.setZkNodeData(file.getAbsolutePath() + vo.SEPARATOR + 0l);
-            zookeeperUtils.createNode(vo);
+            zookeeperUtil.createNode(vo);
         }
     }
 
     protected void updateZkState(WorkDataVo vo) throws Exception {
         vo.setZkNodeData(vo.getFilePath() + vo.SEPARATOR + (vo.getLastIndex() + 1l));
-        zookeeperUtils.setNodeData(vo);
+        zookeeperUtil.setNodeData(vo);
     }
 
     protected synchronized String readLineFile(WorkDataVo vo) throws Exception {
         // 更新日志文件目录信息
         updateFilesState(vo);
         // 随机抽样文件
-        zookeeperUtils.sampleChildrenNode(vo);
+        zookeeperUtil.sampleChildrenNode(vo);
         String data = FileUtil.readLineFile(new File(vo.getFilePath()), vo.getLastIndex(), vo.getEncode());
         if (data == null) {
             logger.info(vo.getFilePath() + "文件已经被全部读取处理！");
-            zookeeperUtils.deleteNode(vo);
+            zookeeperUtil.deleteNode(vo);
             FileUtil.renameFile(new File(vo.getFilePath()));
             throw new Exception(vo.getFilePath() + "文件已经被全部读取处理！");
         }

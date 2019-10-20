@@ -3,7 +3,6 @@ package com.timebusker.generate.task;
 import com.timebusker.generate.utils.FileUtil;
 import com.timebusker.generate.vo.WorkDataVo;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -14,18 +13,18 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author:timebusker
  * @date:2019/8/30
  */
-@Component
+//@Component
 public class HotelAccessLogGenerateTask extends AbstractBaseTask {
 
     private static AtomicLong count = new AtomicLong(1l);
 
     @PostConstruct
     public void init() throws Exception {
-        vo = new WorkDataVo(zookeeperUtils.getServer(), zookeeperUtils.getROOT());
+        vo = new WorkDataVo(zookeeperUtil.getServer(), zookeeperUtil.getROOT());
         vo.setZkWorkPath(config.getHotelZK());
         vo.setEncode(FileUtil.ENCODE_UTF8);
         // 创建工作目录
-        zookeeperUtils.createWorkNode(vo);
+        zookeeperUtil.createWorkNode(vo);
         // 设置文件后缀
         super.suffix = "txt";
         vo.setSourcePath(config.getHotel());
