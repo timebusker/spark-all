@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author:timebusker
  * @date:2019/8/30
  */
-@Component
+//@Component
 public class MoocAccessLogGenerateTask extends AbstractBaseTask {
 
     private static AtomicLong count = new AtomicLong(1l);

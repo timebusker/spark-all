@@ -15,7 +15,7 @@ object SparkSQLWithHive {
    *
    * 2、拷贝hive-site.xml等文件到项目classpath路径下：/resources
    *
-   * 3、RDD与DataFrame互相转化
+   * 3、hive连接元数据驱动也要配置，重点，不配置获取不到元数据不抛异常，直接使用本地目录
    *
    * @param args
    */
@@ -26,7 +26,6 @@ object SparkSQLWithHive {
 
     val spark = SparkSession.builder.config(conf).enableHiveSupport().getOrCreate()
 
-    import spark.implicits._
     import spark.sql
 
     sql("drop table if exists src")

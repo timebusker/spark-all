@@ -8,6 +8,7 @@ import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.spark.streaming.kafka010.KafkaUtils
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
 import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.lionsoul.ip2region.{DbConfig, DbSearcher}
 
 /**
  * @Description:ImoocAccessLogETL
@@ -15,6 +16,11 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
  * @Date2019/10/20 15:49
  **/
 object ImoocAccessLogETL {
+
+  val config = new DbConfig
+
+  val dbFile = Thread.currentThread().getContextClassLoader.getResource("ip2region.db").getPath
+
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("ImoocAccessLogETL").setMaster("local[3]")
@@ -29,6 +35,13 @@ object ImoocAccessLogETL {
       "enable.auto.commit" -> (true: java.lang.Boolean)
     )
     val topics = Array("imooc-access")
+
+    /**
+     * 广播searcher变量 必须能被序列化
+     */
+    //    val searcher: Broadcast[DbSearcher] = {
+    //      ssc.sparkContext.broadcast(new DbSearcher(config, dbFile))
+    //    }
 
     // 数据消费
     val streaming = KafkaUtils.createDirectStream[String, String](
@@ -83,10 +96,11 @@ object ImoocAccessLogETL {
         cmsType = cmsTypeId(0)
         cmsId = cmsTypeId(1)
       }
-
-      val area = "华东区域"
-      val province = "浙江省"
-      val city = "杭州市"
+      val searcher = new DbSearcher(config, dbFile)
+      val areaStr = searcher.btreeSearch(ip).getRegion;
+      val area = areaStr.split("\\|")(0)
+      val province = areaStr.split("\\|")(2)
+      val city = areaStr.split("\\|")(3)
       url + "\t" + cmsType + "\t" + cmsId + "\t" + traffic + "\t" + ip + "\t" + area + "\t" + province + "\t" + city + "\t" + datetime
     } catch {
       case e: Exception => {

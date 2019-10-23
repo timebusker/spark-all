@@ -19,7 +19,7 @@
             <!-- 文件名称 -->
             <fileNamePattern>${FILE}/crawler.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
-            <MaxHistory>100</MaxHistory>
+            <MaxHistory>10</MaxHistory>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>${PATTERN}</pattern>
