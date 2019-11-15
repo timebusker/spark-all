@@ -17,7 +17,7 @@
         <file>${FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>${FILE}/crawler.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${FILE}/generate.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>10</MaxHistory>
         </rollingPolicy>
