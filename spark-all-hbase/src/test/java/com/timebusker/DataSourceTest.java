@@ -13,6 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
@@ -92,6 +95,19 @@ public class DataSourceTest {
         phoenix.setSex("男");
         phoenix.setAge("100");
         phoenix.setAddress("北京市");
-        phoenixUserRepository.save(phoenix);
+        phoenixUserRepository.savePhoenixUser(phoenix);
+    }
+
+    @Test
+    public void test32() {
+        PhoenixUserEntity phoenix = phoenixUserRepository.getByIdx("a40a5613e7df490c8d1fe35734ca207f");
+        System.out.println("==================>>>\t\t" + JSON.toJSONString(phoenix));
+    }
+
+    @Test
+    public void test33() {
+        Sort sort = new Sort(Sort.Direction.DESC, "idx");
+        Page<PhoenixUserEntity> page = phoenixUserRepository.getAllByNameContains("Tom", PageRequest.of(0, 15, sort));
+        System.out.println("==================>>>\t\t" + JSON.toJSONString(page));
     }
 }

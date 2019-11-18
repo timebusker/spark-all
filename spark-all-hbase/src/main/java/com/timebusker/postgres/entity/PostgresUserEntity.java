@@ -3,6 +3,7 @@ package com.timebusker.postgres.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @Description:UserEntity
@@ -11,7 +12,7 @@ import javax.persistence.Table;
  **/
 @Entity
 @Table(name = "tb_user_postgres")
-public class PostgresUserEntity {
+public class PostgresUserEntity implements Serializable {
 
     @Id
     private String idx;

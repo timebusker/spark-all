@@ -65,13 +65,14 @@ public class PhoenixJpaDataSourceConfiguration {
                 .persistenceUnit("phoenix-jpa")
                 .build();
         Properties properties = new Properties();
-        properties.setProperty("hbm2ddl.auto", "none");
+        // 关闭启动检测，避免语法不一致导致SQL执行失败
+        properties.setProperty("hibernate.hbm2ddl.auto", "none");
         // 设置方言实现类
         properties.setProperty("hibernate.dialect", "com.ruesga.phoenix.dialect.PhoenixDialect");
         // 设置实体分段策略
         properties.setProperty("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl");
         // 设置拦截器
-        properties.setProperty("hibernate.session_factory.interceptor", "site.assad.jpa.phoenix.interceptor.PhoenixInterceptor");
+        properties.setProperty("hibernate.session_factory.interceptor", "com.timebusker.interceptor.PhoenixInterceptor");
         em.setJpaProperties(properties);
         return em;
     }
