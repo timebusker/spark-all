@@ -1,5 +1,6 @@
 package com.timebusker.test.spark_ml_practice.ch03
 
+import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkConf
 import org.apache.spark.ml.classification.NaiveBayes
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
@@ -12,6 +13,8 @@ import org.apache.spark.sql.{SaveMode, SparkSession}
  **/
 object NaiveBayesModel {
 
+  Logger.getLogger("org").setLevel(Level.WARN)
+
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
     conf.setMaster("local[*]")
@@ -19,7 +22,7 @@ object NaiveBayesModel {
     val spark = SparkSession.builder().config(conf).getOrCreate()
 
     // val data = spark.read.textFile("D:\\test-data\\AppDataETL$_1575123346166\\part-*")
-    val data = spark.read.format("libsvm").load("D:\\test-data\\AppDataETL$_1575123346166\\part-*")
+    val data = spark.read.format("libsvm").load("D:\\test-data\\test\\ch02\\AppDataETL$_1576078692965\\part-00003")
     data.show
     val df = data.toDF()
     df.groupBy("label").count().show()
@@ -32,8 +35,9 @@ object NaiveBayesModel {
     // 测试模型--预测
     val predictions = model.transform(testData)
     // 查看效果
-    predictions.show(1000)
-    predictions.write.mode(SaveMode.Overwrite).text("D:\\test-data\\" + this.getClass.getSimpleName + System.currentTimeMillis())
+    import spark.implicits._
+    predictions.groupBy("label").count().show()
+    predictions.filter($"label" === $"prediction").groupBy("label").count().show()
 
     // 模型评估器
     val evaluator = new MulticlassClassificationEvaluator()

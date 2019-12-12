@@ -24,12 +24,16 @@ object DecisionTreeClassifierModel {
     conf.setAppName(this.getClass.getSimpleName)
     val spark = SparkSession.builder().config(conf).getOrCreate()
 
-    val data = spark.read.format("libsvm").load("D:\\test-data\\test\\AppDataETL$_1575195683513\\part-00004")
+    val data = spark.read.format("libsvm").load("D:\\test-data\\test\\ch02\\AppDataETL$_1576078692965\\part-00003")
 
     val Array(trainingData, testData) = data.randomSplit(Array(0.7, 0.3))
 
     val model = new DecisionTreeClassifier().setMaxMemoryInMB(2048).fit(trainingData)
     val predictions = model.transform(testData)
+
+    import spark.implicits._
+    predictions.groupBy("label").count().show()
+    predictions.filter($"label" === $"prediction").groupBy("label").count().show()
 
     // 查看效果
     predictions.show(1000)

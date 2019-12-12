@@ -12,7 +12,7 @@ object AppDataETL {
 
   val inputPath = "D:\\test-data\\book2-master\\2rd_data\\ch03\\appdata.txt"
 
-  val outputPath = "D:\\test-data\\test\\" + this.getClass.getSimpleName + "_"
+  val outputPath = "D:\\test-data\\test\\ch02\\" + this.getClass.getSimpleName + "_"
 
   val APP_CLASSES = Seq(
     "购物优惠",
@@ -24,7 +24,7 @@ object AppDataETL {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
-    conf.setMaster("local[3]")
+    conf.setMaster("local[8]")
     conf.setAppName(this.getClass.getSimpleName)
     val spark = SparkSession.builder().config(conf).getOrCreate()
     spark.sparkContext.setCheckpointDir(outputPath + "_____" + System.currentTimeMillis())
